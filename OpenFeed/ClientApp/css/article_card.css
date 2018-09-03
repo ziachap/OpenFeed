@@ -1,0 +1,13 @@
+﻿.articlecard {
+    position: relative;
+    display: block;
+}
+
+.articlecard_content {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+
+.articlecard_bg {
+}

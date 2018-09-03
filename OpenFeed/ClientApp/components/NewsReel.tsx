@@ -5,6 +5,7 @@ import { ApplicationState } from '../store';
 import * as NewsReelState from '../store/NewsReel';
 import NewsService from '../services/NewsService';
 import Article from '../services/NewsService';
+import ArticleCard from './ArticleCard';
 
 type NewsReelProps = NewsReelState.NewsReelState
     & typeof NewsReelState.actionCreators
@@ -23,30 +24,16 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
         return <div>
             <h1>The News</h1>
             <p>This is the news!</p>
-            {this.props.isLoading ? <span>Loading...</span> : []}
-            {this.renderArticles()}
+            {this.props.isLoading ? <span>Loading...</span> : this.renderArticles()}
         </div>;
     }
 
     private renderArticles() {
-        return <table className='table'>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                </tr>
-            </thead>
-            <tbody>
+        return <div className='table'>
                 {this.props.articles.map(article =>
-                    <tr>
-                        <td key={article.title}>
-                            <img src={article.imageUrl} width="200px" />
-                            <a target="_blank" href={article.url}><b> {article.title}</b></a>
-                            <div dangerouslySetInnerHTML={{ __html: article.description }} />
-                        </td>
-                    </tr>
+                     <ArticleCard {...article} key={article.title} />
                 )}
-            </tbody>
-        </table>;
+        </div>;
     }
     /*
     private renderPagination() {

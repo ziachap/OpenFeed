@@ -1,4 +1,5 @@
 import './css/site.css';
+import './css/article_card.css';
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
