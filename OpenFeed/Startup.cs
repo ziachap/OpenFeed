@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenFeed.Services.NewsAPI;
+using OpenFeed.Services.NewsService;
+using OpenFeed.Services.RSS;
 
 namespace OpenFeed
 {
@@ -22,6 +25,12 @@ namespace OpenFeed
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<INewsApiClientProvider, NewsApiClientProvider>();
+
+            services.AddTransient<IRssFeedService, RssFeedService>();
+            services.AddTransient<IRssFeedRepository, RssFeedRepository>();
+
             services.AddMvc();
         }
 

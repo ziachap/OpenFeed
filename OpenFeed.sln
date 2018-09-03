@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenFeed", "OpenFeed\OpenFeed.csproj", "{6DE48177-6326-4030-B3E8-2F352680FFAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFeed", "OpenFeed\OpenFeed.csproj", "{6DE48177-6326-4030-B3E8-2F352680FFAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenFeed.Services", "OpenFeed.Services\OpenFeed.Services.csproj", "{373AE854-8208-4229-AC15-B74D37838AD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6DE48177-6326-4030-B3E8-2F352680FFAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DE48177-6326-4030-B3E8-2F352680FFAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DE48177-6326-4030-B3E8-2F352680FFAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{373AE854-8208-4229-AC15-B74D37838AD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{373AE854-8208-4229-AC15-B74D37838AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{373AE854-8208-4229-AC15-B74D37838AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{373AE854-8208-4229-AC15-B74D37838AD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
