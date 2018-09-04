@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenFeed.Services.Cache;
+using OpenFeed.Services.DateTimeProvider;
 using OpenFeed.Services.NewsAPI;
 using OpenFeed.Services.NewsService;
 using OpenFeed.Services.RSS;
@@ -26,8 +28,11 @@ namespace OpenFeed
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
+            services.AddTransient<ICache, MemoryCacheWrapper>();
+            services.AddTransient<IDateTimeProvider, UtcDateTimeProvider>();
 
-            services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<INewsService, CachingNewsService<NewsService>>();
+            services.AddTransient<NewsService>();
             services.AddTransient<INewsApiClientProvider, NewsApiClientProvider>();
 
             services.AddTransient<IRssFeedService, RssFeedService>();

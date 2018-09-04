@@ -25,7 +25,7 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
                        <div className="ui right rail">
                            {this.renderMenu()}
                        </div>
-                       <h1>United Kingdom // Business</h1>
+                       <h1>United Kingdom // All</h1>
                        <p>This is the news!</p>
                        {this.props.isLoading ? <span>Loading...</span> : this.renderArticles()}
                    </div>

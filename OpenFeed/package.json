@@ -43,7 +43,6 @@
     "webpack-merge": "4.1.0"
   },
   "dependencies": {
-    "semantic-ui": "^2.3.3",
-    "semantic-ui-react": "^0.82.3"
+    "semantic-ui": "^2.3.3"
   }
 }

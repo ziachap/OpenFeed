@@ -6,21 +6,10 @@ namespace OpenFeed.Services.Cache
 {
     public interface ICache
     {
+        bool Exists(string key);
+
         T Get<T>(string key);
 
-        void Add(string key, object value, TimeSpan duration);
-    }
-
-    public class MemoryCache : ICache
-    {
-        public T Get<T>(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(string key, object value, TimeSpan duration)
-        {
-            throw new NotImplementedException();
-        }
+        void Set(string key, object value, TimeSpan duration);
     }
 }

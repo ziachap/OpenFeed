@@ -17,14 +17,16 @@ export default class ArticleCard extends React.Component<ArticleProps, {}> {
                    </div>
                    <div className="content">
                        <a target="_blank" className="header" href={ this.props.url}>{this.props.title}</a>
-                       <div className="meta">
+                <div className="meta">
+                    <span className="source">{this.props.source}</span> 
+                    <span> - </span>
                            <span className="date">{this.props.publishDate}</span>
                        </div>
                        <div className="description">
                            <p>{this.props.description}</p>
                        </div>
                        <div className="extra">
-                           <div className="ui label">Business</div>
+                    <div className="ui label">{this.props.source}</div>
                            <div className="ui label">United Kingdom</div>
                        </div>
                    </div>
