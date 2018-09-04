@@ -1,6 +1,30 @@
 import './css/site.css';
 import './css/article_card.css';
+
 import 'bootstrap';
+import "jquery";
+
+//import '../semantic/dist/semantic.js'
+
+import '../semantic/dist/components/reset.css'
+import '../semantic/dist/components/card.css'
+import '../semantic/dist/components/item.css'
+import '../semantic/dist/components/container.css'
+import '../semantic/dist/components/grid.css'
+import '../semantic/dist/components/header.css'
+import '../semantic/dist/components/image.css'
+import '../semantic/dist/components/menu.css'
+import '../semantic/dist/components/divider.css'
+import '../semantic/dist/components/list.css'
+import '../semantic/dist/components/segment.css'
+import '../semantic/dist/components/dropdown.css'
+import '../semantic/dist/components/label.css'
+import '../semantic/dist/components/input.css'
+import '../semantic/dist/components/rail.css'
+
+import '../semantic/dist/components/checkbox.css'
+import '../semantic/dist/components/checkbox.js'
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';

@@ -1,45 +1,38 @@
-import * as React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import * as React from "react";
 
 export class NavMenu extends React.Component<{}, {}> {
-    public render() {
-        return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
-                <div className='navbar-header'>
-                    <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                        <span className='sr-only'>Toggle navigation</span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                    </button>
-                    <Link className='navbar-brand' to={ '/' }>OpenFeed</Link>
-                </div>
-                <div className='clearfix'></div>
-                <div className='navbar-collapse collapse'>
-                    <ul className='nav navbar-nav'>
-                        <li>
-                            <NavLink exact to={ '/' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-home'></span> Home
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={'/newsreel'} activeClassName='active'>
-                                <span className='glyphicon glyphicon-book'></span> News Reel
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ '/counter' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-education'></span> Counter
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ '/fetchdata' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-th-list'></span> Fetch data
-                            </NavLink>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>;
+    render() {
+        return <div className="ui fixed menu">
+                   <div className="ui container">
+                       <a href="#" className="header item">
+                           <img className="logo" src="images/of_logo_dark.png" alt="OpenFeed"/>
+                           OpenFeed
+                       </a>
+                       <a className="item" href={"/newsreel"}>News Reel</a>
+                       <div className="ui simple dropdown item">
+                           Categories <i className="dropdown icon"></i>
+                           <div className="menu">
+                               <a className="item" href="/">World</a>
+                               <a className="item" href="#">Technology</a>
+                               <div className="divider"></div>
+                               <div className="header">Header Item</div>
+                               <div className="item">
+                                   <i className="dropdown icon"></i>
+                                   Sub Menu
+                                   <div className="menu">
+                                       <a className="item" href="#">Link Item</a>
+                                       <a className="item" href="#">Link Item</a>
+                                   </div>
+                               </div>
+                               <a className="item" href="#">Link Item</a>
+                           </div>
+                       </div>
+                       <div className="right item">
+                           <div className="ui input">
+                               <input type="text" placeholder="Search..." />
+                           </div>
+                       </div>
+                   </div>
+               </div>;
     }
 }

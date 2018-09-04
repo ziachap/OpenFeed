@@ -1,55 +1,58 @@
 import * as React from "react";
+import * as NewsReel from "../store/NewsReel";
 
-type ArticleCardProps = {
-    title: string;
-    description: string;
-    url: string;
-    imageUrl: string;
-}
+type ArticleProps = NewsReel.Article
 
-export default class ArticleCard extends React.Component<ArticleCardProps, {}> {
+export default class ArticleCard extends React.Component<ArticleProps, {}> {
 
-    constructor(props: ArticleCardProps) {
+    constructor(props: ArticleProps) {
         super(props);
-        console.log(props);
-    }
-
-    componentWillMount() {
-    }
-
-    componentWillReceiveProps(nextProps: ArticleCardProps) {
     }
 
     render() {
-        return <div className="articlecard">
-            <div>
-                <img className="img-fluid" src={this.props.imageUrl} alt="" width="500"/>
-                <div className="articlecard_content">
-                    <a href={this.props.url}>
-                        <h3>{this.props.title}</h3>
-                    </a>
-                    <div dangerouslySetInnerHTML={{ __html: this.props.description }} />
-                </div>
-            </div>
-                   <div className="ui card"><div className="image">
-                           <img src="/images/avatar2/large/kristy.png">
+
+        return <div className="item">
+                   <div className="image">
+                       <img src={this.props.imageUrl} alt=""/>
+                   </div>
+                   <div className="content">
+                       <a target="_blank" className="header" href={ this.props.url}>{this.props.title}</a>
+                       <div className="meta">
+                           <span className="date">{this.props.publishDate}</span>
                        </div>
-                       <div className="content">
-                           <a className="header">Kristy</a>
-                           <div className="meta">
-                               <span className="date">Joined in 2013</span>
-                           </div>
-                           <div className="description">
-                               Kristy is an art director living in New York.
-                           </div>
+                       <div className="description">
+                           <p>{this.props.description}</p>
                        </div>
-                       <div className="extra content">
-                           <a>
-                               <i className="user icon"></i>
-                               22 Friends
-                           </a>
+                       <div className="extra">
+                           <div className="ui label">Business</div>
+                           <div className="ui label">United Kingdom</div>
                        </div>
                    </div>
-        </div> ;
+               </div>;
     }
+
+    /*
+    return <div className="column">
+               <div className="ui card">
+                   <div className="image">
+                       <img src={this.props.imageUrl}/>
+                   </div>
+                   <div className="content">
+                       <a className="header" href={this.props.url} target="_blank">{this.props.title}</a>
+                       <div className="meta">
+                    <span className="date">{this.props.publishDate}</span>
+                       </div>
+                       <div className="description">
+                           {this.props.description}
+                       </div>
+                   </div>
+                   <div className="extra content">
+                       <a>
+                           <i className="user icon"></i>
+                           Something
+                       </a>
+                   </div>
+               </div>
+           </div>;
+}*/
 }
