@@ -16,7 +16,7 @@ namespace OpenFeed.Services.NewsService
             _newsService = newsService;
         }
 
-        public IEnumerable<Article> SearchArticles()
+        public IEnumerable<Article> SearchArticles(NewsSearchConfiguration config)
         {
             // TODO: This is a very basic temporary cache that does not consider search configuration
 
@@ -25,7 +25,7 @@ namespace OpenFeed.Services.NewsService
                 return _cache.Get<IEnumerable<Article>>(Key);
             }
 
-            var value = _newsService.SearchArticles();
+            var value = _newsService.SearchArticles(config);
 
             _cache.Set(Key, value, new TimeSpan(1, 0, 0, 0));
 

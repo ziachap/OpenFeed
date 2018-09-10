@@ -18,9 +18,9 @@ namespace OpenFeed.Controllers
         }
 
         // GET
-        public IEnumerable<Article> Index()
+        public IEnumerable<Article> Index(NewsSearchConfiguration config)
         {
-            return _newsService.SearchArticles();
+            return _newsService.SearchArticles(config);
         }
     }
 }

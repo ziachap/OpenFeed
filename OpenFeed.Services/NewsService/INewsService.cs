@@ -5,6 +5,6 @@ namespace OpenFeed.Services.NewsService
 {
     public interface INewsService
     {
-        IEnumerable<Article> SearchArticles();
+        IEnumerable<Article> SearchArticles(NewsSearchConfiguration config);
     }
 }

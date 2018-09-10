@@ -41,10 +41,10 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
     private renderMenu() {
         return <div className="ui">
                    <div className="ui vertical text small menu">
-                       <div className="header item">Sort By</div>
-                       <a className="active item">Closest</a>
-                       <a className="item">Most Comments</a>
-                       <a className="item">Most Popular</a>
+                <div className="header item">Sort By</div>
+                <a className="item">Most Relevant</a>
+                <a className="item">Most Popular</a>
+                <a className="active item">Newest</a>
                         <div className="header item">Categories</div>
                         <a className="active item">Business</a>
                         <a className="item">Technology</a>
@@ -55,7 +55,7 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
                     <div className="inline field">
                         <div className="ui checkbox">
                             <input type="checkbox" className="hidden" />
-                            <label>Checkbox</label>
+                            <label>Business</label>
                         </div>
                     </div>
                 </div>

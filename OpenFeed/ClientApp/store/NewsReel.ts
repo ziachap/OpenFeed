@@ -10,6 +10,7 @@ export interface NewsReelState {
     articles: Article[];
 }
 
+// TODO: These types that map to a C# type should probably go in one place (e.g. /ApiModels) ?
 export interface Article {
     title: string;
     description: string;
@@ -18,6 +19,11 @@ export interface Article {
     publishDate: string;
     author: string;
     source: string;
+}
+
+// TODO: Move this to relevant place
+export class NewsSearchConfiguration {
+    category?: string;
 }
 
 // -----------------
@@ -42,8 +48,17 @@ type KnownAction = RequestArticlesAction | ReceiveArticlesAction;
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
+    // TODO: Perhaps move this out to an INewsService so it can be reused
     requestArticles: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        let fetchTask = fetch(`/newsapi`)
+
+        // test config
+        var req = new NewsSearchConfiguration();
+        req.category = "business";
+
+        // TODO: Move this URL to some special place with all the api URLs 
+        var url = "/newsapi?" + makeQueryString(req);
+
+        let fetchTask = fetch(url)
             .then(response => response.json() as Promise<Article[]>)
             .then(data => {
                 dispatch({ type: 'RECEIVE_ARTICLES', articles: data });
@@ -51,6 +66,13 @@ export const actionCreators = {
 
         addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
         dispatch({ type: 'REQUEST_ARTICLES' });
+
+        // TODO: Perhaps move this out somewhere? There is probably a nicer way to do this
+        function makeQueryString(controls: NewsSearchConfiguration) : string {
+            var str = "";
+            if (controls.category) str += "category=" + controls.category;
+            return str;
+        }
     }
 };
 

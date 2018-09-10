@@ -16,7 +16,7 @@ namespace OpenFeed.Services.NewsService
             _clientProvider = clientProvider;
         }
 
-        public IEnumerable<Article> SearchArticles()
+        public IEnumerable<Article> SearchArticles(NewsSearchConfiguration config)
         {
             return ArticlesFromApi();
         }
@@ -30,7 +30,7 @@ namespace OpenFeed.Services.NewsService
             {
                 Page = 1,
                 PageSize = 20,
-                //Category = Categories.Business,
+                Category = Categories.Business,
                 Country = Countries.GB,
                 Language = Languages.EN,
                 Q = ""
