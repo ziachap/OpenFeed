@@ -7,5 +7,7 @@ namespace OpenFeed.Services.NewsService
 		public Categories? Category => (Categories?)CategoryId;
 
 	    public int? CategoryId { get; set; }
+
+		public int Page { get; set; }
     }
 }

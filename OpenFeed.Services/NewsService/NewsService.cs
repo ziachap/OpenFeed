@@ -3,28 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using NewsAPI.Constants;
 using OpenFeed.Services.NewsRepository;
+using OpenFeed.Services.Pagination;
 
 namespace OpenFeed.Services.NewsService
 {
     public class NewsService : INewsService
     {
         private readonly IArticleRepository _articleRepository;
+        private readonly IPaginationService _paginationService;
+		private const int PageSize = 20;
 
-        public NewsService(IArticleRepository articleRepository)
+        public NewsService(IArticleRepository articleRepository, IPaginationService paginationService)
         {
 	        _articleRepository = articleRepository;
+	        _paginationService = paginationService;
         }
 
-        public IEnumerable<Article> SearchArticles(NewsSearchConfiguration config)
-        {
-            return ArticlesFromApi().Where(a => IsInCategory(a, config.Category));
-        }
+        public IPaginatedResults<Article> SearchArticles(NewsSearchConfiguration config)
+	    {
+		    return _paginationService.Paginate(ArticlesFromApi(config), config.Page, PageSize);
+	    }
 
-        private IEnumerable<Article> ArticlesFromApi()
+	    private IEnumerable<Article> ArticlesFromApi(NewsSearchConfiguration config)
         {
 	        return _articleRepository.GetAll()
 		        .Select(ToArticle)
-		        .OrderByDescending(x => x.PublishDate)
+		        .Where(a => IsInCategory(a, config.Category))
+				.OrderByDescending(x => x.PublishDate)
 		        .ToList();
         }
 

@@ -10,6 +10,7 @@ using OpenFeed.Services.NewsAPI;
 using OpenFeed.Services.NewsManager;
 using OpenFeed.Services.NewsRepository;
 using OpenFeed.Services.NewsService;
+using OpenFeed.Services.Pagination;
 using OpenFeed.Services.RSS;
 using IDatabaseProvider = OpenFeed.Services.Database.IDatabaseProvider;
 
@@ -30,8 +31,9 @@ namespace OpenFeed
             services.AddMemoryCache();
             services.AddTransient<ICache, MemoryCacheWrapper>();
             services.AddTransient<IDateTimeProvider, UtcDateTimeProvider>();
+	        services.AddTransient<IPaginationService, PaginationService>();
 
-	        services.AddTransient<IDatabaseProvider, DefaultDatabaseProvider>();
+			services.AddTransient<IDatabaseProvider, DefaultDatabaseProvider>();
 	        services.AddTransient<IArticleRepository, ArticleRepository>();
 
 			//services.AddTransient<INewsService, CachingNewsService<NewsService>>();

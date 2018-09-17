@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenFeed.Services.Cache;
+using OpenFeed.Services.Pagination;
 
 namespace OpenFeed.Services.NewsService
 {
@@ -16,13 +17,13 @@ namespace OpenFeed.Services.NewsService
             _newsService = newsService;
         }
 
-        public IEnumerable<Article> SearchArticles(NewsSearchConfiguration config)
+        public IPaginatedResults<Article> SearchArticles(NewsSearchConfiguration config)
         {
             // TODO: This is a very basic temporary cache that does not consider search configuration
 
             if (_cache.Exists(Key))
             {
-                return _cache.Get<IEnumerable<Article>>(Key);
+                return _cache.Get<IPaginatedResults<Article>>(Key);
             }
 
             var value = _newsService.SearchArticles(config);

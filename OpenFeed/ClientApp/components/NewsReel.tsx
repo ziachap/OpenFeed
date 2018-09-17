@@ -35,6 +35,11 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 		this.requestArticles();
 	}
 
+	public setPageHandler(event: any, page: number): void {
+		this.props.setPage(page);
+		this.requestArticles();
+	}
+
     public render() {
         return <div className="ui container text">
 
@@ -43,18 +48,46 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
                            {this.renderMenu()}
                        </div>
 				<h1>United Kingdom > {newsCategoryService.getName(this.props.searchConfiguration.categoryId)}</h1>
-                       <p>This is the news!</p>
-                       {this.props.isLoading ? <span>Loading...</span> : this.renderArticles()}
+				<p>This is the news!</p>
+	                   {this.renderPagination()}
+				{this.props.isLoading ? <span>Loading...</span> : this.renderArticles()}
+				{this.renderPagination()}
                    </div>
                </div>;
 	}
 
     private renderArticles() {
         return <div className="ui divided items">
-                   {this.props.articles.map(article => <ArticleCard {...article} key={article.title}/>)}
+			{this.props.paginatedArticles.results.map(article => <ArticleCard {...article} key={article.title}/>)}
                </div>;
-    }
-    
+	}
+
+	// TODO: This should be contained within a reusable component
+	private renderPagination() {
+		return <div className="ui pagination menu">
+			       {this.renderPaginationInput("<",
+				       this.props.paginatedArticles.page - 1,
+				       false,
+				       !this.props.paginatedArticles.hasPreviousPage)}
+			       {
+				       Array.from(Array(this.props.paginatedArticles.totalPages).keys())
+					       .map(i => this.renderPaginationInput(String(i + 1),
+						       i,
+						       this.props.paginatedArticles.page === i,
+						       false))
+			       }
+			       {this.renderPaginationInput(">",
+				       this.props.paginatedArticles.page + 1,
+				       false,
+				       !this.props.paginatedArticles.hasNextPage)}
+		       </div>;
+	}
+
+	private renderPaginationInput(text: string, page: number, active: boolean, disabled: boolean) {
+		return <a className={`item${active ? " active" : ""}${disabled ? " disabled" : ""}`}
+			onClick={(e: any) => disabled ? null : this.setPageHandler(e, page)}>{text}</a>;
+	}
+
 	private renderMenu() {
         return <div className="ui">
 			<div className="ui vertical text small menu">
@@ -83,8 +116,10 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 	}
 
 	private renderCategoryInput(text: string, id?: number) {
-		return <a className={"item " + (this.props.searchConfiguration.categoryId === id ? "active" : "")}
-			onClick={(e: any) => this.setCategoryHandler(e, id)}>{text}</a>
+		return <a className={`item ${this.props.searchConfiguration.categoryId === id ? "active" : ""}`}
+			onClick={(e: any) => this.setCategoryHandler(e, id)}>
+			       {text}
+		       </a>;
 	}
 
 }

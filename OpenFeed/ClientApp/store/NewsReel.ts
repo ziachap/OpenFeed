@@ -7,7 +7,7 @@ import { AppThunkAction } from './';
 
 export interface NewsReelState {
     isLoading: boolean;
-	articles: Article[];
+	paginatedArticles: IPaginatedArticles;
 	searchConfiguration: NewsSearchConfiguration;
 }
 
@@ -26,6 +26,16 @@ export interface Article {
 // TODO: Move this to relevant place
 export class NewsSearchConfiguration {
     categoryId?: number;
+    page?: number;
+}
+
+export interface IPaginatedArticles {
+	results: Article[];
+	page: number;
+	pageSize: number;
+	totalPages: number;
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
 }
 
 // -----------------
@@ -38,7 +48,7 @@ interface RequestArticlesAction {
 
 interface ReceiveArticlesAction {
     type: 'RECEIVE_ARTICLES';
-    articles: Article[];
+	results: IPaginatedArticles;
 }
 
 interface SetCategoryAction {
@@ -46,9 +56,14 @@ interface SetCategoryAction {
 	categoryId?: number;
 }
 
+interface SetPageAction {
+	type: 'SET_PAGE';
+	page: number;
+}
+
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestArticlesAction | ReceiveArticlesAction | SetCategoryAction;
+type KnownAction = RequestArticlesAction | ReceiveArticlesAction | SetCategoryAction | SetPageAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -62,9 +77,9 @@ export const actionCreators = {
 		var url = "/newsapi?" + makeQueryString(newsSearchConfig);
 
         let fetchTask = fetch(url)
-            .then(response => response.json() as Promise<Article[]>)
-            .then(data => {
-                dispatch({ type: 'RECEIVE_ARTICLES', articles: data });
+			.then(response => response.json() as Promise<IPaginatedArticles>)
+			.then(data => {
+				dispatch({ type: 'RECEIVE_ARTICLES', results: data });
             });
 
         addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
@@ -73,47 +88,75 @@ export const actionCreators = {
         // TODO: Perhaps move this out somewhere? There is probably a nicer way to do this
         function makeQueryString(controls: NewsSearchConfiguration) : string {
             var str = "";
-			if (controls.categoryId) str += "categoryId=" + controls.categoryId;
-            return str;
+			if (defined(controls.categoryId)) str += "categoryId=" + controls.categoryId;
+			if (defined(controls.page)) str += "&page=" + controls.page;
+			return str;
+
+			function defined(value:any):boolean {
+				return value !== undefined && value !== null;
+			}
         }
 	},
 	setCategory: (categoryId?: number): AppThunkAction<SetCategoryAction> => (dispatch, getState) => {
 		dispatch({ type: 'SET_CATEGORY', categoryId: categoryId });
-    }
+	},
+	setPage: (page: number): AppThunkAction<SetPageAction> => (dispatch, getState) => {
+		dispatch({ type: 'SET_PAGE', page: page });
+	}
 };
 
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: NewsReelState = { articles: [], isLoading: false, searchConfiguration: new NewsSearchConfiguration()};
+const unloadedArticles: IPaginatedArticles = {
+	results: [],
+	page: 0,
+	pageSize: 0,
+	totalPages: 0,
+	hasNextPage: false,
+	hasPreviousPage: false
+};
+
+const unloadedState: NewsReelState = {
+	paginatedArticles: unloadedArticles , isLoading: false, searchConfiguration: new NewsSearchConfiguration()
+};
 
 export const reducer: Reducer<NewsReelState> = (state: NewsReelState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case 'REQUEST_ARTICLES':
             return {
-                articles: state.articles,
+	            paginatedArticles: state.paginatedArticles,
 				isLoading: true,
                 searchConfiguration: state.searchConfiguration
             };
         case 'RECEIVE_ARTICLES':
             return {
-                articles: action.articles,
+	            paginatedArticles: action.results,
 				isLoading: false,
                 searchConfiguration: state.searchConfiguration
 			};
 		case 'SET_CATEGORY':
 			var newConfig = state.searchConfiguration;
 			newConfig.categoryId = action.categoryId;
+			newConfig.page = 0;
 	        return {
-				articles: state.articles,
+		        paginatedArticles: state.paginatedArticles,
 		        isLoading: state.isLoading,
 				searchConfiguration: newConfig
+			};
+        case 'SET_PAGE':
+	        var newConfig = state.searchConfiguration;
+			newConfig.page = action.page;
+	        return {
+		        paginatedArticles: state.paginatedArticles,
+		        isLoading: state.isLoading,
+		        searchConfiguration: newConfig
 	        };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;
     }
 
-    return state || unloadedState;
+	return state || unloadedState;
 };
