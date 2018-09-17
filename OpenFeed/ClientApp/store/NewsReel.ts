@@ -7,7 +7,8 @@ import { AppThunkAction } from './';
 
 export interface NewsReelState {
     isLoading: boolean;
-    articles: Article[];
+	articles: Article[];
+	searchConfiguration: NewsSearchConfiguration;
 }
 
 // TODO: These types that map to a C# type should probably go in one place (e.g. /ApiModels) ?
@@ -18,12 +19,13 @@ export interface Article {
     imageUrl: string;
     publishDate: string;
     author: string;
-    source: string;
+	source: string;
+	category: string;
 }
 
 // TODO: Move this to relevant place
 export class NewsSearchConfiguration {
-    category?: string;
+    categoryId?: number;
 }
 
 // -----------------
@@ -39,9 +41,14 @@ interface ReceiveArticlesAction {
     articles: Article[];
 }
 
+interface SetCategoryAction {
+	type: 'SET_CATEGORY';
+	categoryId?: number;
+}
+
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestArticlesAction | ReceiveArticlesAction;
+type KnownAction = RequestArticlesAction | ReceiveArticlesAction | SetCategoryAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -49,14 +56,10 @@ type KnownAction = RequestArticlesAction | ReceiveArticlesAction;
 
 export const actionCreators = {
     // TODO: Perhaps move this out to an INewsService so it can be reused
-    requestArticles: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-
-        // test config
-        var req = new NewsSearchConfiguration();
-        req.category = "business";
-
+	requestArticles: (newsSearchConfig: NewsSearchConfiguration): AppThunkAction<KnownAction> => (dispatch, getState) => {
+		
         // TODO: Move this URL to some special place with all the api URLs 
-        var url = "/newsapi?" + makeQueryString(req);
+		var url = "/newsapi?" + makeQueryString(newsSearchConfig);
 
         let fetchTask = fetch(url)
             .then(response => response.json() as Promise<Article[]>)
@@ -70,16 +73,19 @@ export const actionCreators = {
         // TODO: Perhaps move this out somewhere? There is probably a nicer way to do this
         function makeQueryString(controls: NewsSearchConfiguration) : string {
             var str = "";
-            if (controls.category) str += "category=" + controls.category;
+			if (controls.categoryId) str += "categoryId=" + controls.categoryId;
             return str;
         }
+	},
+	setCategory: (categoryId?: number): AppThunkAction<SetCategoryAction> => (dispatch, getState) => {
+		dispatch({ type: 'SET_CATEGORY', categoryId: categoryId });
     }
 };
 
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: NewsReelState = { articles: [], isLoading: false };
+const unloadedState: NewsReelState = { articles: [], isLoading: false, searchConfiguration: new NewsSearchConfiguration()};
 
 export const reducer: Reducer<NewsReelState> = (state: NewsReelState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
@@ -87,13 +93,23 @@ export const reducer: Reducer<NewsReelState> = (state: NewsReelState, incomingAc
         case 'REQUEST_ARTICLES':
             return {
                 articles: state.articles,
-                isLoading: true
+				isLoading: true,
+                searchConfiguration: state.searchConfiguration
             };
         case 'RECEIVE_ARTICLES':
             return {
                 articles: action.articles,
-                isLoading: false
-            };
+				isLoading: false,
+                searchConfiguration: state.searchConfiguration
+			};
+		case 'SET_CATEGORY':
+			var newConfig = state.searchConfiguration;
+			newConfig.categoryId = action.categoryId;
+	        return {
+				articles: state.articles,
+		        isLoading: state.isLoading,
+				searchConfiguration: newConfig
+	        };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

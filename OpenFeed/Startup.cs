@@ -1,17 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenFeed.Services.Cache;
+using OpenFeed.Services.Database;
 using OpenFeed.Services.DateTimeProvider;
 using OpenFeed.Services.NewsAPI;
+using OpenFeed.Services.NewsManager;
+using OpenFeed.Services.NewsRepository;
 using OpenFeed.Services.NewsService;
 using OpenFeed.Services.RSS;
+using IDatabaseProvider = OpenFeed.Services.Database.IDatabaseProvider;
 
 namespace OpenFeed
 {
@@ -31,9 +31,15 @@ namespace OpenFeed
             services.AddTransient<ICache, MemoryCacheWrapper>();
             services.AddTransient<IDateTimeProvider, UtcDateTimeProvider>();
 
-            services.AddTransient<INewsService, CachingNewsService<NewsService>>();
+	        services.AddTransient<IDatabaseProvider, DefaultDatabaseProvider>();
+	        services.AddTransient<IArticleRepository, ArticleRepository>();
+
+			//services.AddTransient<INewsService, CachingNewsService<NewsService>>();
+			services.AddTransient<INewsService, NewsService>();
             services.AddTransient<NewsService>();
             services.AddTransient<INewsApiClientProvider, NewsApiClientProvider>();
+            services.AddTransient<INewsImporter, NewsImporter>();
+            services.AddTransient<INewsAggregator, NewsApiNewsAggregator>();
 
             services.AddTransient<IRssFeedService, RssFeedService>();
             services.AddTransient<IRssFeedRepository, RssFeedRepository>();

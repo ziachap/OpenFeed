@@ -2,46 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using NewsAPI.Constants;
-using NewsAPI.Models;
-using OpenFeed.Services.NewsAPI;
+using OpenFeed.Services.NewsRepository;
 
 namespace OpenFeed.Services.NewsService
 {
     public class NewsService : INewsService
     {
-        private readonly INewsApiClientProvider _clientProvider;
+        private readonly IArticleRepository _articleRepository;
 
-        public NewsService(INewsApiClientProvider clientProvider)
+        public NewsService(IArticleRepository articleRepository)
         {
-            _clientProvider = clientProvider;
+	        _articleRepository = articleRepository;
         }
 
         public IEnumerable<Article> SearchArticles(NewsSearchConfiguration config)
         {
-            return ArticlesFromApi();
+            return ArticlesFromApi().Where(a => IsInCategory(a, config.Category));
         }
 
         private IEnumerable<Article> ArticlesFromApi()
         {
-            // TODO: Use a call layer and do not call directly from client provider
-            // TODO: Use your own config type and map to TopHeadlinesRequest in call layer
-
-            var result = _clientProvider.ExecuteRequest(c => c.GetTopHeadlines(new TopHeadlinesRequest
-            {
-                Page = 1,
-                PageSize = 20,
-                Category = Categories.Business,
-                Country = Countries.GB,
-                Language = Languages.EN,
-                Q = ""
-            }));
-
-            if (result.Articles == null) return Enumerable.Empty<Article>();
-
-            return result.Articles.Select(ToArticle).ToList();
+	        return _articleRepository.GetAll()
+		        .Select(ToArticle)
+		        .OrderByDescending(x => x.PublishDate)
+		        .ToList();
         }
 
-        // This is to be removed eventually
+	    private bool IsInCategory(Article article, Categories? category) 
+		    => !category.HasValue || Enum.GetName(typeof(Categories), category.Value) == article.Category;
+
+	    // This is to be removed eventually
         private static IEnumerable<Article> TestArticles()
         {
             return Enumerable.Range(1, 5).Select(i => new Article
@@ -52,21 +42,23 @@ namespace OpenFeed.Services.NewsService
                 ImageUrl = "https://via.placeholder.com/350x200",
                 PublishDate = DateTime.Now.ToLongDateString(),
                 Author = "John Smith",
-                Source = "Test News"
+                Source = "Test News",
+				Category = "World"
             });
         }
 
-        private static Article ToArticle(global::NewsAPI.Models.Article article)
+        private static Article ToArticle(ArticleData article)
         {
             return new Article
             {
                 Title = article.Title,
                 Description = article.Description,
                 Url = article.Url,
-                ImageUrl = article.UrlToImage,
-                PublishDate = article.PublishedAt?.ToLongDateString() ?? string.Empty,
+                ImageUrl = article.ImageUrl,
+                PublishDate = article.PublishDate?.ToLongDateString() ?? string.Empty,
                 Author = article.Author,
-                Source = article.Source.Name
+                Source = article.Source,
+				Category = article.Category
             };
         }
     }

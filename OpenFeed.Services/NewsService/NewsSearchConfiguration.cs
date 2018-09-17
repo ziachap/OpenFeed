@@ -1,7 +1,11 @@
-﻿namespace OpenFeed.Services.NewsService
+﻿using NewsAPI.Constants;
+
+namespace OpenFeed.Services.NewsService
 {
     public class NewsSearchConfiguration
     {
-        public string Category { get; set; }
+		public Categories? Category => (Categories?)CategoryId;
+
+	    public int? CategoryId { get; set; }
     }
 }

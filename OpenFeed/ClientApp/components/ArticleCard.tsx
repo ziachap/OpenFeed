@@ -25,9 +25,9 @@ export default class ArticleCard extends React.Component<ArticleProps, {}> {
                        <div className="description">
                            <p>{this.props.description}</p>
                        </div>
-                       <div className="extra">
+				<div className="extra">
+					<div className="ui label">{this.props.category}</div>
                     <div className="ui label">{this.props.source}</div>
-                           <div className="ui label">United Kingdom</div>
                        </div>
                    </div>
                </div>;

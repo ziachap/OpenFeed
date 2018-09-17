@@ -23,7 +23,7 @@ import '../semantic/dist/components/input.css'
 import '../semantic/dist/components/rail.css'
 
 import '../semantic/dist/components/checkbox.css'
-import '../semantic/dist/components/checkbox.js'
+//import '../semantic/dist/components/checkbox.js'
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
