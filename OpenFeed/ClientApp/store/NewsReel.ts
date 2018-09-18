@@ -71,10 +71,10 @@ type KnownAction = RequestArticlesAction | ReceiveArticlesAction | SetCategoryAc
 
 export const actionCreators = {
     // TODO: Perhaps move this out to an INewsService so it can be reused
-	requestArticles: (newsSearchConfig: NewsSearchConfiguration): AppThunkAction<KnownAction> => (dispatch, getState) => {
+	requestArticles: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
 		
         // TODO: Move this URL to some special place with all the api URLs 
-		var url = "/newsapi?" + makeQueryString(newsSearchConfig);
+		var url = "/newsapi?" + makeQueryString(getState().newsReel.searchConfiguration);
 
         let fetchTask = fetch(url)
 			.then(response => response.json() as Promise<IPaginatedArticles>)

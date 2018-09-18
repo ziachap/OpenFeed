@@ -33,7 +33,7 @@ export default class ArticleCard extends React.Component<ArticleProps, {}> {
                </div>;
     }
 
-    /*
+    /* // UI CARDS
     return <div className="column">
                <div className="ui card">
                    <div className="image">
