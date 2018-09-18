@@ -1,9 +1,8 @@
 import * as React from "react";
-import * as NewsReel from "../store/NewsReel";
 import * as NewsReelState from "../store/NewsReel";
-import { NewsReelProps }  from "./NewsReel";
-import { ApplicationState } from '../store';
-import { connect } from 'react-redux';
+import { NewsReelProps } from "./NewsReel";
+import { ApplicationState } from "../store";
+import { connect } from "react-redux";
 import { newsCategories } from "../models/NewsCategories";
 
 export class Categories extends React.Component<NewsReelProps, {}> {
@@ -12,16 +11,16 @@ export class Categories extends React.Component<NewsReelProps, {}> {
 		super(props);
 	}
 
-	public setCategoryHandler(event: any, category?: number): void {
+	setCategoryHandler(event: any, category?: number): void {
 		this.props.setCategory(category);
 		this.props.requestArticles();
 	}
 
 	render() {
 		return <div>
-				       <div className="header item">Categories</div>
-				       {this.renderCategoryInput("All", undefined)}
-				       {newsCategories.map(category => this.renderCategoryInput(category.name, category.id))}
+			       <div className="header item">Categories</div>
+			       {this.renderCategoryInput("All", undefined)}
+			       {newsCategories.map(category => this.renderCategoryInput(category.name, category.id))}
 		       </div>;
 	}
 
