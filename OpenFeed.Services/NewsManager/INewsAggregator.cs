@@ -22,7 +22,7 @@ namespace OpenFeed.Services.NewsManager
 				new TopHeadlinesRequest
 				{
 					Q = string.Empty,
-					PageSize = 20,
+					PageSize = 40,
 					Page = 1,
 					Country = Countries.GB,
 					Category = c,

@@ -4,18 +4,18 @@ using NPoco;
 
 namespace OpenFeed.Services.Database
 {
-	public class DefaultDatabaseProvider : IDatabaseProvider
+	public class SqlDatabaseProvider : IDatabaseProvider
 	{
 		private readonly IConfiguration _configuration;
 
-		public DefaultDatabaseProvider(IConfiguration configuration)
+		public SqlDatabaseProvider(IConfiguration configuration)
 		{
 			_configuration = configuration;
 		}
 
 		public IDatabase Database()
 		{
-			return new NPoco.Database(_configuration.GetConnectionString("OpenFeed"),
+			return new NPoco.Database(_configuration.GetConnectionString("OpenFeedSql"),
 				DatabaseType.SqlServer2012,
 				SqlClientFactory.Instance);
 		}

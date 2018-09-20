@@ -33,8 +33,10 @@ namespace OpenFeed
             services.AddTransient<IDateTimeProvider, UtcDateTimeProvider>();
 	        services.AddTransient<IPaginationService, PaginationService>();
 
-			services.AddTransient<IDatabaseProvider, DefaultDatabaseProvider>();
-	        services.AddTransient<IArticleRepository, ArticleRepository>();
+			services.AddTransient<IDatabaseProvider, SqlDatabaseProvider>();
+	        services.AddTransient<IMongoDatabaseProvider, MongoDatabaseProvider>();
+
+	        services.AddTransient<IQueryableArticleRepository, MongoArticleRepository>();
 
 			//services.AddTransient<INewsService, CachingNewsService<NewsService>>();
 			services.AddTransient<INewsService, NewsService>();

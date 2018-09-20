@@ -1,4 +1,6 @@
 ﻿using System;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using NPoco;
 
 namespace OpenFeed.Services.NewsRepository
@@ -7,22 +9,34 @@ namespace OpenFeed.Services.NewsRepository
 	[PrimaryKey("Id")]
 	public class ArticleData
 	{
-		public Guid Id { get; set; }
+		//[BsonElement]
+		//public Guid Id { get; set; }
+		
+		[BsonId]
+		public ObjectId Id { get; set; }
 
+		[BsonElement]
 		public string Title { get; set; }
 
+		[BsonElement]
 		public string Description { get; set; }
 
+		[BsonElement]
 		public string Url { get; set; }
 
+		[BsonElement]
 		public string ImageUrl { get; set; }
 
+		[BsonElement]
 		public DateTime? PublishDate { get; set; }
 
+		[BsonElement]
 		public string Author { get; set; }
 
+		[BsonElement]
 		public string Source { get; set; }
 
+		[BsonElement]
 		public string Category { get; set; }
 
 		public int? Hash()

@@ -1,2 +1,2 @@
 # OpenFeed
-An ASP.NET Core/ReactJS site that collates news articles from multiple sources
+An ASP.NET Core/React/MongoDB site that collates news articles from multiple sources

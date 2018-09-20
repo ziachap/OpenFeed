@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Driver;
 using NewsAPI.Constants;
 using OpenFeed.Services.NewsRepository;
 using OpenFeed.Services.Pagination;
+using SortDirection = OpenFeed.Services.NewsRepository.SortDirection;
 
 namespace OpenFeed.Services.NewsService
 {
     public class NewsService : INewsService
     {
-        private readonly IArticleRepository _articleRepository;
+        private readonly IQueryableArticleRepository _articleRepository;
         private readonly IPaginationService _paginationService;
 		private const int PageSize = 20;
 
-        public NewsService(IArticleRepository articleRepository, IPaginationService paginationService)
+        public NewsService(IQueryableArticleRepository articleRepository, IPaginationService paginationService)
         {
 	        _articleRepository = articleRepository;
 	        _paginationService = paginationService;
@@ -25,19 +27,30 @@ namespace OpenFeed.Services.NewsService
 	    }
 
 	    private IEnumerable<Article> ArticlesFromApi(NewsSearchConfiguration config)
-        {
-	        return _articleRepository.GetAll()
+	    {
+			return _articleRepository.GetMany(Filter(config), Sort())
 		        .Select(ToArticle)
-		        .Where(a => IsInCategory(a, config.Category))
-				.OrderByDescending(x => x.PublishDate)
 		        .ToList();
         }
 
-	    private bool IsInCategory(Article article, Categories? category) 
+	    FilterDefinition<ArticleData> Filter(NewsSearchConfiguration config)
+	    {
+		    return config.Category.HasValue 
+			    ? Builders<ArticleData>.Filter.Eq(data => data.Category, CategoryName(config.Category.Value))
+			    : FilterDefinition<ArticleData>.Empty;
+	    }
+
+	    ISort<ArticleData> Sort()
+		    => new Sort<ArticleData>(a => a.PublishDate, SortDirection.Descending);
+
+		private bool IsInCategory(Article article, Categories? category) 
 		    => !category.HasValue || Enum.GetName(typeof(Categories), category.Value) == article.Category;
 
-	    // This is to be removed eventually
-        private static IEnumerable<Article> TestArticles()
+		private string CategoryName(Categories? category) 
+			=> category.HasValue ? Enum.GetName(typeof(Categories), category.Value) : null;
+
+		// This is to be removed eventually
+		private static IEnumerable<Article> TestArticles()
         {
             return Enumerable.Range(1, 5).Select(i => new Article
             {

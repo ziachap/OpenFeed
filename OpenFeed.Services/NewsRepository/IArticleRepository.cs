@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using MongoDB.Driver;
 
 namespace OpenFeed.Services.NewsRepository
 {
@@ -14,5 +14,13 @@ namespace OpenFeed.Services.NewsRepository
 	    void Update(ArticleData article);
 
 	    void Delete(ArticleData article);
+	}
+
+	// TODO: FilterDefinition is mongo-specific, make more filter type not mongo-specific
+	public interface IQueryableArticleRepository : IArticleRepository
+	{
+		ArticleData GetSingle(FilterDefinition<ArticleData> filter, ISort<ArticleData> sort);
+
+		IEnumerable<ArticleData> GetMany(FilterDefinition<ArticleData> filter, ISort<ArticleData> sort);
 	}
 }
