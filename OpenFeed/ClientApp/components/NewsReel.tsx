@@ -6,6 +6,7 @@ import { ApplicationState } from "../store";
 import ArticleCard from "./ArticleCard";
 import Pagination from "./Pagination";
 import Categories from "./Categories";
+import Sort from "./Sort";
 import { newsCategoryService } from "../models/NewsCategories";
 import "jquery";
 
@@ -49,11 +50,8 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 	private renderMenu() {
 		return <div className="ui">
 			       <div className="ui vertical text small menu">
-
-				       <div className="header item">Sort By</div>
-				       <a className="item">Most Relevant</a>
-				       <a className="item">Most Popular</a>
-				       <a className="active item">Newest</a>
+				
+						<Sort {...this.props} />
 
 				       <Categories {...this.props}/>
 

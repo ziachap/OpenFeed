@@ -1,4 +1,5 @@
 ﻿using NewsAPI.Constants;
+using OpenFeed.Services.NewsRepository;
 
 namespace OpenFeed.Services.NewsService
 {
@@ -7,6 +8,10 @@ namespace OpenFeed.Services.NewsService
 		public Categories? Category => (Categories?)CategoryId;
 
 	    public int? CategoryId { get; set; }
+
+		public SortType SortType => (SortType)SortTypeId;
+
+	    public int SortTypeId { get; set; }
 
 		public int Page { get; set; }
     }

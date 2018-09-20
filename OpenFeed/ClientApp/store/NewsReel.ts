@@ -26,6 +26,7 @@ export interface Article {
 // TODO: Move this to relevant place
 export class NewsSearchConfiguration {
     categoryId?: number;
+	sortTypeId?: number;
     page?: number;
 }
 
@@ -56,6 +57,11 @@ interface SetCategoryAction {
 	categoryId?: number;
 }
 
+interface SetSortTypeAction {
+	type: 'SET_SORT_TYPE';
+	sortTypeId?: number;
+}
+
 interface SetPageAction {
 	type: 'SET_PAGE';
 	page: number;
@@ -63,7 +69,7 @@ interface SetPageAction {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestArticlesAction | ReceiveArticlesAction | SetCategoryAction | SetPageAction;
+type KnownAction = RequestArticlesAction | ReceiveArticlesAction | SetCategoryAction | SetPageAction | SetSortTypeAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -88,7 +94,8 @@ export const actionCreators = {
         // TODO: Perhaps move this out somewhere? There is probably a nicer way to do this
         function makeQueryString(controls: NewsSearchConfiguration) : string {
             var str = "";
-			if (defined(controls.categoryId)) str += "categoryId=" + controls.categoryId;
+			if (defined(controls.categoryId)) str += "&categoryId=" + controls.categoryId;
+			if (defined(controls.sortTypeId)) str += "&sortTypeId=" + controls.sortTypeId;
 			if (defined(controls.page)) str += "&page=" + controls.page;
 			return str;
 
@@ -99,6 +106,9 @@ export const actionCreators = {
 	},
 	setCategory: (categoryId?: number): AppThunkAction<SetCategoryAction> => (dispatch, getState) => {
 		dispatch({ type: 'SET_CATEGORY', categoryId: categoryId });
+	},
+	setSortType: (sortTypeId: number): AppThunkAction<SetSortTypeAction> => (dispatch, getState) => {
+		dispatch({ type: 'SET_SORT_TYPE', sortTypeId: sortTypeId });
 	},
 	setPage: (page: number): AppThunkAction<SetPageAction> => (dispatch, getState) => {
 		dispatch({ type: 'SET_PAGE', page: page });
@@ -139,6 +149,15 @@ export const reducer: Reducer<NewsReelState> = (state: NewsReelState, incomingAc
 		case 'SET_CATEGORY':
 			var newConfig = state.searchConfiguration;
 			newConfig.categoryId = action.categoryId;
+			newConfig.page = 0;
+	        return {
+		        paginatedArticles: state.paginatedArticles,
+		        isLoading: state.isLoading,
+				searchConfiguration: newConfig
+			};
+		case 'SET_SORT_TYPE':
+			var newConfig = state.searchConfiguration;
+			newConfig.sortTypeId = action.sortTypeId;
 			newConfig.page = 0;
 	        return {
 		        paginatedArticles: state.paginatedArticles,
