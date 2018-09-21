@@ -37,6 +37,7 @@ namespace OpenFeed
 	        services.AddTransient<IMongoDatabaseProvider, MongoDatabaseProvider>();
 
 	        services.AddTransient<IQueryableArticleRepository, MongoArticleRepository>();
+	        services.AddTransient<IArticleRepository, MongoArticleRepository>();
 	        services.AddTransient<ISortFactory<ArticleData>, ArticleSortFactory>();
 
 			//services.AddTransient<INewsService, CachingNewsService<NewsService>>();

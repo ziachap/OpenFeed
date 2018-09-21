@@ -24,7 +24,7 @@ export interface Article {
 }
 
 // TODO: Move this to relevant place
-export class NewsSearchConfiguration {
+export interface NewsSearchConfiguration {
     categoryId?: number;
 	sortTypeId?: number;
     page?: number;
@@ -127,8 +127,14 @@ const unloadedArticles: IPaginatedArticles = {
 	hasPreviousPage: false
 };
 
+const unloadedSearchConfiguration: NewsSearchConfiguration = {
+	categoryId: undefined,
+	sortTypeId: 0,
+	page: 0
+};
+
 const unloadedState: NewsReelState = {
-	paginatedArticles: unloadedArticles , isLoading: false, searchConfiguration: new NewsSearchConfiguration()
+	paginatedArticles: unloadedArticles, isLoading: false, searchConfiguration: unloadedSearchConfiguration
 };
 
 export const reducer: Reducer<NewsReelState> = (state: NewsReelState, incomingAction: Action) => {
