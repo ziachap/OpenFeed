@@ -1,71 +1,7 @@
-/*
-.main-nav li .glyphicon {
-    margin-right: 10px;
-}
-
-.main-nav li a.active,
-.main-nav li a.active:hover,
-.main-nav li a.active:focus {
-    background-color: #4189C7;
-    color: white;
-}
-
-.main-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-}
-
-@media (max-width: 767px) {
-    body {
-        padding-top: 50px;
-    }
-}
-
-@media (min-width: 768px) {
-    .main-nav {
-        height: 100%;
-        width: calc(25% - 20px);
-    }
-    .main-nav .navbar {
-        border-radius: 0px;
-        border-width: 0px;
-        height: 100%;
-    }
-    .main-nav .navbar-header {
-        float: none;
-    }
-    .main-nav .navbar-collapse {
-        border-top: 1px solid #444;
-        padding: 0px;
-    }
-    .main-nav .navbar ul {
-        float: none;
-    }
-    .main-nav .navbar li {
-        float: none;
-        font-size: 15px;
-        margin: 6px;
-    }
-    .main-nav .navbar li a {
-        padding: 10px 16px;
-        border-radius: 4px;
-    }
-    .main-nav .navbar a {
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-*/
 
 .header-title.container {
 	padding-top: 3em;
-	padding-bottom: 2em;
+	padding-bottom: 1.5em;
 }
 
 body {
@@ -113,6 +49,7 @@ body {
 *******************************/
 
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin');
+@import url('https://fonts.googleapis.com/css?family=Bitter:400,700,400italic,700italic&subset=latin');
 
 html,
 body {
@@ -124,16 +61,16 @@ html {
 }
 
 body {
-    margin: 0px;
-    padding: 0px;
-    overflow-x: hidden;
-    min-width: 320px;
-    background: #FFFFFF;
-    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 1.4285em;
-    color: rgba(0, 0, 0, 0.87);
-    font-smoothing: antialiased;
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+	min-width: 320px;
+	background: #FFFFFF;
+	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 1.4285em;
+	color: rgba(0, 0, 0, 0.87);
+	font-smoothing: antialiased;
 }
 
 
@@ -141,16 +78,24 @@ body {
              Headers
 *******************************/
 
+.serif {
+	font-family: 'Bitter', serif !important;
+}
+
+.thin {
+	font-weight: normal !important;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5 {
-    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    line-height: 1.28571429em;
-    margin: calc(2rem - 0.14285714em ) 0em 1rem;
-    font-weight: bold;
-    padding: 0em;
+	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	line-height: 1.28571429em;
+	margin: calc(2rem - 0.14285714em ) 0em 1rem;
+	font-weight: bold;
+	padding: 0em;
 }
 
 h1 {
@@ -196,8 +141,8 @@ h5 {
 *******************************/
 
 p {
-    margin: 0em 0em 1em;
-    line-height: 1.4285em;
+	margin: 0em 0em 1em;
+	line-height: 1.4285em;
 }
 
     p:first-child {
@@ -213,8 +158,8 @@ p {
 --------------------*/
 
 a {
-    color: #4183C4;
-    text-decoration: none;
+	color: #4183C4;
+	text-decoration: none;
 }
 
     a:hover {

@@ -16,7 +16,7 @@ export default class ArticleCard extends React.Component<ArticleProps, {}> {
                        <img src={this.props.imageUrl} alt=""/>
                    </div>
                    <div className="content">
-                       <a target="_blank" className="header" href={ this.props.url}>{this.props.title}</a>
+				<a target="_blank" className="thin serif header" href={ this.props.url}>{this.props.title}</a>
                 <div className="meta">
                     <span className="source">{this.props.source}</span> 
                     <span> - </span>

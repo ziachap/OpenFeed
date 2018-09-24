@@ -27,7 +27,7 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 
 	render() {
 		return <div className="ui container text">
-			       <div className="ui small header">
+					<div className="ui tiny thin serif header">
 				       United Kingdom > {newsCategoryService.getName(this.props.searchConfiguration.categoryId)}
 			       </div>
 			       <p></p>
