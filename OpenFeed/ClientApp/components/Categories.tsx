@@ -19,8 +19,10 @@ export class Categories extends React.Component<NewsReelProps, {}> {
 	render() {
 		return <div>
 			       <div className="header item">Categories</div>
-			       {this.renderCategoryInput("All", undefined)}
-			       {newsCategories.map(category => this.renderCategoryInput(category.name, category.id))}
+			       <div className="ui secondary vertical pointing menu">
+				       {this.renderCategoryInput("All", undefined)}
+				       {newsCategories.map(category => this.renderCategoryInput(category.name, category.id))}
+			       </div>
 		       </div>;
 	}
 

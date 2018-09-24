@@ -19,8 +19,11 @@ export class Sort extends React.Component<NewsReelProps, {}> {
 	render() {
 		return <div>
 			       <div className="header item">Sort By</div>
-			       {this.defined(this.props.searchConfiguration.text) ? this.renderRelevanceSortInput() : ""}
-			       {sortTypes.map(sortType => this.renderSortInput(sortType.name, sortType.id))}
+			       <div className="ui secondary vertical pointing menu">
+
+				       {this.defined(this.props.searchConfiguration.text) ? this.renderRelevanceSortInput() : ""}
+				       {sortTypes.map(sortType => this.renderSortInput(sortType.name, sortType.id))}
+			       </div>
 		       </div>;
 	}
 

@@ -30,7 +30,7 @@ export class SearchInput extends React.Component<NewsReelProps, {}> {
 	}
 
 	render() {
-		return <div>
+		return <div className="item">
 			       <div className="ui input">
 				       <input type="text" placeholder="Search..." value={this.props.searchConfiguration.text}
 				              onChange={(e: any) => this.setTextHandler(e)}/>
