@@ -25,10 +25,22 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 		this.props.requestArticles();
 	}
 
+	private breadcrumb(): string {
+		let breadcrumb = `United Kingdom > ${newsCategoryService.getName(this.props.searchConfiguration.categoryId)}`;
+		if (defined(this.props.searchConfiguration.text)) {
+			breadcrumb += ` > "${this.props.searchConfiguration.text}"`;
+		}
+		return breadcrumb;
+
+		function defined(value?: string): boolean {
+			return value !== undefined && value !== null && value !== "";
+		}
+	}
+
 	render() {
 		return <div className="ui container text">
 					<div className="ui tiny thin serif header">
-				       United Kingdom > {newsCategoryService.getName(this.props.searchConfiguration.categoryId)}
+						{this.breadcrumb()}
 			       </div>
 			       <p></p>
 			       <Pagination {...this.props}/>
