@@ -48,7 +48,6 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 				       <div className="ui right rail">
 					       {this.renderMenu()}
 				       </div>
-
 				       {this.props.isLoading ? this.renderLoader() : this.renderArticles()}
 			       </div>
 			       <Pagination {...this.props}/>
@@ -85,18 +84,6 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 		       </div>;
 	}
 }
-
-/*
-<div className="header item">Other</div>
-<div className="ui small form">
-   <div className="inline field">
-       <div className="ui checkbox">
-	       <input type="checkbox" className="hidden"/>
-	       <label>Business</label>
-       </div>
-   </div>
-</div>
- */
 
 export default connect(
 	(state: ApplicationState) => state.newsReel, // Selects which state properties are merged into the component's props
