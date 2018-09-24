@@ -16,13 +16,29 @@ export class SearchInput extends React.Component<NewsReelProps, {}> {
 		this.props.requestArticles();
 	}
 
+	clearTextHandler(event: any): void {
+		this.props.setText("");
+		this.props.requestArticles();
+	}
+
 	render() {
 		return <div>
-			       <div className="header item">Search</div>
 			       <div className="ui input">
-				<input type="text" placeholder="Search..." onChange={(e: any) => this.setTextHandler(e)}/>
+				       <input type="text" placeholder="Search..." value={this.props.searchConfiguration.text}
+				              onChange={(e: any) => this.setTextHandler(e)}/>
 			       </div>
+			       {this.defined(this.props.searchConfiguration.text) ? this.renderClearButton() : ""}
+
 		       </div>;
+	}
+
+	private renderClearButton() {
+		return <a className="ui tiny item" onClick={(e: any) => this.clearTextHandler(e)}>CLEAR</a>;
+	}
+
+
+	private defined(value: any): boolean {
+		return value !== undefined && value !== null && value !== "";
 	}
 }
 

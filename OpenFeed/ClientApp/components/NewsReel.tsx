@@ -28,7 +28,7 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 	render() {
 		return <div className="ui container text">
 			       <div className="ui small header">
-					United Kingdom > {newsCategoryService.getName(this.props.searchConfiguration.categoryId)}
+				       United Kingdom > {newsCategoryService.getName(this.props.searchConfiguration.categoryId)}
 			       </div>
 			       <p></p>
 			       <Pagination {...this.props}/>
@@ -53,8 +53,8 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 	private renderMenu() {
 		return <div className="ui">
 			       <div className="ui vertical text small menu">
-						<SearchInput {...this.props} />
-						<Sort {...this.props} />
+				       <SearchInput {...this.props}/>
+				       <Sort {...this.props}/>
 				       <Categories {...this.props}/>
 			       </div>
 		       </div>;

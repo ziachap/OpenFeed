@@ -70,7 +70,7 @@ interface SetPageAction {
 
 interface SetTextAction {
 	type: 'SET_TEXT';
-	text: string;
+	text?: string;
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
@@ -125,7 +125,7 @@ export const actionCreators = {
 	setPage: (page: number): AppThunkAction<SetPageAction> => (dispatch, getState) => {
 		dispatch({ type: 'SET_PAGE', page: page });
 	},
-	setText: (text: string): AppThunkAction<SetTextAction> => (dispatch, getState) => {
+	setText: (text?: string): AppThunkAction<SetTextAction> => (dispatch, getState) => {
 		dispatch({ type: 'SET_TEXT', text: text });
 	}
 };
