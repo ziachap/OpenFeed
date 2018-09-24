@@ -6,14 +6,8 @@ using OpenFeed.Services.NewsRepository.Sort;
 
 namespace OpenFeed.Services.NewsRepository
 {
-	[TableName("Article")]
-	[PrimaryKey("Id")]
 	public class ArticleData : ITextSearchSortable
 	{
-		// SQL
-		//[BsonElement]
-		//public Guid Id { get; set; }
-		
 		[BsonId]
 		public ObjectId Id { get; set; }
 
@@ -43,20 +37,5 @@ namespace OpenFeed.Services.NewsRepository
 
 		[BsonIgnoreIfNull]
 		public double? TextMatchScore { get; set; }
-
-		public int? Hash()
-		{
-			unchecked 
-			{
-				if (Title != null && Url != null)
-				{
-					int hash = 17;
-					hash = hash * 23 + Title.GetHashCode();
-					hash = hash * 23 + Url.GetHashCode();
-					return hash;
-				}
-				return null;
-			}
-		}
 	}
 }

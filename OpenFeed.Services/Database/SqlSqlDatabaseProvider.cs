@@ -4,7 +4,7 @@ using NPoco;
 
 namespace OpenFeed.Services.Database
 {
-	public class SqlDatabaseProvider : IDatabaseProvider
+	public class SqlDatabaseProvider : ISqlDatabaseProvider
 	{
 		private readonly IConfiguration _configuration;
 

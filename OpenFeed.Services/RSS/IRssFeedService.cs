@@ -31,17 +31,17 @@ namespace OpenFeed.Services.RSS
                     var rssData = wclient.DownloadString(feed.Url);
                     var xml = XDocument.Parse(rssData);
 
+					// TODO: Need the rest of the fields
                     articles = articles.Concat(xml.Descendants("item").Select(x => new Article
                         {
                             Title = (string)x.Element("title"),
-                            Description = (string)x.Element("description")
+                            Description = (string)x.Element("description"),
+							Source = feed.Title
                         }));
                 }
             }
 
             return articles.ToList();
-
-            //return Enumerable.Range(1, 5).Select(x => new Article() { Title = "Article " + x.ToString() });
         }
     }
 }

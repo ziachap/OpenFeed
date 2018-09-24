@@ -5,7 +5,7 @@ using NPoco;
 
 namespace OpenFeed.Services.Database
 {
-    public interface IDatabaseProvider
+    public interface ISqlDatabaseProvider
     {
 	    IDatabase Database();
     }

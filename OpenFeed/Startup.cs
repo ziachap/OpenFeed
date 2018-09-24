@@ -11,10 +11,9 @@ using OpenFeed.Services.NewsManager;
 using OpenFeed.Services.NewsRepository;
 using OpenFeed.Services.NewsRepository.Sort;
 using OpenFeed.Services.NewsService;
-using OpenFeed.Services.NewsService.QueryBuilder;
+using OpenFeed.Services.NewsService.Filter;
 using OpenFeed.Services.Pagination;
 using OpenFeed.Services.RSS;
-using IDatabaseProvider = OpenFeed.Services.Database.IDatabaseProvider;
 
 namespace OpenFeed
 {
@@ -35,11 +34,11 @@ namespace OpenFeed
             services.AddTransient<IDateTimeProvider, UtcDateTimeProvider>();
 	        services.AddTransient<IPaginationService, PaginationService>();
 
-			services.AddTransient<IDatabaseProvider, SqlDatabaseProvider>();
+			services.AddTransient<ISqlDatabaseProvider, SqlDatabaseProvider>();
 	        services.AddTransient<IMongoDatabaseProvider, MongoDatabaseProvider>();
 
 	        services.AddTransient<IQueryableArticleRepository, MongoArticleRepository>();
-	        services.AddTransient<IArticleRepository, MongoArticleRepository>();
+	        services.AddTransient<IRepository<ArticleData>, MongoArticleRepository>();
 	        services.AddTransient<ISortFactory<ArticleData>, ArticleSortFactory>();
 
 			//services.AddTransient<INewsService, CachingNewsService<NewsService>>();

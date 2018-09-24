@@ -43,6 +43,7 @@ namespace OpenFeed.Services.NewsManager
 
 		private IEnumerable<ArticleData> ApiArticles(TopHeadlinesRequest request)
 		{
+			// TODO: Perhaps use a call layer and do not call directly from client provider
 			var result = _apiClientProvider.ExecuteRequest(c => c.GetTopHeadlines(request));
 
 			if (result.Articles == null) return Enumerable.Empty<ArticleData>();

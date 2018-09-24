@@ -1,21 +1,20 @@
 ﻿using NewsAPI.Constants;
-using OpenFeed.Services.NewsRepository;
 using OpenFeed.Services.NewsRepository.Sort;
 
 namespace OpenFeed.Services.NewsService
 {
-    public class NewsSearchConfiguration
-    {
-		public Categories? Category => (Categories?)CategoryId;
+	public class NewsSearchConfiguration
+	{
+		public Categories? Category => (Categories?) CategoryId;
 
-	    public int? CategoryId { get; set; }
+		public int? CategoryId { get; set; }
 
-		public SortType SortType => (SortType)SortTypeId;
+		public SortType SortType => (SortType) SortTypeId;
 
-	    public int SortTypeId { get; set; }
+		public int SortTypeId { get; set; }
 
 		public int Page { get; set; }
 
 		public string Text { get; set; }
-    }
+	}
 }

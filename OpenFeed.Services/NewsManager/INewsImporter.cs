@@ -12,9 +12,9 @@ namespace OpenFeed.Services.NewsManager
 	public class NewsImporter : INewsImporter
 	{
 		private readonly INewsAggregator _newsAggregator;
-		private readonly IArticleRepository _repository;
+		private readonly IRepository<ArticleData> _repository;
 
-		public NewsImporter(IArticleRepository repository, INewsAggregator newsAggregator)
+		public NewsImporter(IRepository<ArticleData> repository, INewsAggregator newsAggregator)
 		{
 			_repository = repository;
 			_newsAggregator = newsAggregator;
@@ -29,7 +29,6 @@ namespace OpenFeed.Services.NewsManager
 		{
 			var existingArticles = _repository.GetAll();
 
-			// TODO: Use a call layer and do not call directly from client provider
 			var result = _newsAggregator.AggregateArticles()
 				.Where(x => DoesNotExist(x, existingArticles))
 				.ToList();

@@ -7,16 +7,18 @@ namespace OpenFeed.Services.NewsService
 {
 	public class TestNewsService : INewsService
 	{
-		private readonly IPaginationService _paginationService;
 		private const int PageSize = 20;
+		private readonly IPaginationService _paginationService;
 
 		public TestNewsService(IPaginationService paginationService)
 		{
 			_paginationService = paginationService;
 		}
 
-		public IPaginatedResults<Article> SearchArticles(NewsSearchConfiguration config) 
-			=> _paginationService.Paginate(TestArticles(), 1, PageSize);
+		public IPaginatedResults<Article> SearchArticles(NewsSearchConfiguration config)
+		{
+			return _paginationService.Paginate(TestArticles(), 1, PageSize);
+		}
 
 		private static IEnumerable<Article> TestArticles()
 		{

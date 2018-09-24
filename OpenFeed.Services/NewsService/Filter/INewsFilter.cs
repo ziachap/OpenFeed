@@ -1,7 +1,7 @@
 ﻿using MongoDB.Driver;
 using OpenFeed.Services.NewsRepository;
 
-namespace OpenFeed.Services.NewsService.QueryBuilder
+namespace OpenFeed.Services.NewsService.Filter
 {
 	public interface INewsFilter
 	{

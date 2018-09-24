@@ -3,22 +3,22 @@ using MongoDB.Driver;
 
 namespace OpenFeed.Services.NewsRepository
 {
-    public interface IArticleRepository
+    public interface IRepository<TData>
     {
-	    void Insert(ArticleData article);
+	    void Insert(TData article);
 
-	    void Insert(IEnumerable<ArticleData> articles);
+	    void Insert(IEnumerable<TData> articles);
 
-		IEnumerable<ArticleData> GetAll();
+		IEnumerable<TData> GetAll();
 
-	    void Update(ArticleData article);
+	    void Update(TData article);
 
-	    void Delete(ArticleData article);
+	    void Delete(TData article);
 	}
 
 	// TODO: FilterDefinition is mongo-specific, make more filter type not mongo-specific
     // TODO: This can eventually be merged into IArticleRepository
-	public interface IQueryableArticleRepository : IArticleRepository
+	public interface IQueryableArticleRepository : IRepository<ArticleData>
 	{
 		ArticleData GetSingle(IMongoQuery<ArticleData> query);
 

@@ -126,7 +126,7 @@ export const actionCreators = {
 		// TODO: This is a bit hacky
 		if (typeof window !== 'undefined') {
 			var reel = document.getElementById('react-app');
-			if (reel !== null && document.documentElement.scrollTop > 200) {
+			if (reel !== null && reel !== undefined && document.documentElement.scrollTop > 200) {
 				reel.scrollIntoView();
 			}
 		}
