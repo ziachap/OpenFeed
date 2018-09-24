@@ -123,9 +123,10 @@ export const actionCreators = {
 		dispatch({ type: 'SET_SORT_TYPE', sortTypeId: sortTypeId });
 	},
 	setPage: (page: number): AppThunkAction<SetPageAction> => (dispatch, getState) => {
+		// TODO: This is a bit hacky
 		if (typeof window !== 'undefined') {
 			var reel = document.getElementById('react-app');
-			if (reel !== null) {
+			if (reel !== null && document.documentElement.scrollTop > 200) {
 				reel.scrollIntoView();
 			}
 		}
