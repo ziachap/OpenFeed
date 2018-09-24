@@ -1,5 +1,6 @@
 ﻿using NewsAPI.Constants;
 using OpenFeed.Services.NewsRepository;
+using OpenFeed.Services.NewsRepository.Sort;
 
 namespace OpenFeed.Services.NewsService
 {

@@ -123,6 +123,12 @@ export const actionCreators = {
 		dispatch({ type: 'SET_SORT_TYPE', sortTypeId: sortTypeId });
 	},
 	setPage: (page: number): AppThunkAction<SetPageAction> => (dispatch, getState) => {
+		if (typeof window !== 'undefined') {
+			var reel = document.getElementById('react-app');
+			if (reel !== null) {
+				reel.scrollIntoView();
+			}
+		}
 		dispatch({ type: 'SET_PAGE', page: page });
 	},
 	setText: (text?: string): AppThunkAction<SetTextAction> => (dispatch, getState) => {

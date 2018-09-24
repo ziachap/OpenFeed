@@ -1,24 +1,29 @@
 ﻿using System;
 using System.Linq.Expressions;
+using MongoDB.Driver;
 
 namespace OpenFeed.Services.NewsRepository
 {
-	// TODO: Make some local query type with a builder type
-	// Depreciated
-	public interface IQuery<TData>
+	public interface IMongoQuery<TData>
 	{
-		Expression<Func<TData, bool>> AsExpression();
+		FilterDefinition<TData> Filter { get; }
+		ProjectionDefinition<TData> Projection { get; }
+		SortDefinition<TData> Sort { get; }
 	}
 
-	public class Query<TData> : IQuery<TData>
+	public class MongoQuery<TData> : IMongoQuery<TData>
 	{
-		private readonly Func<TData, bool> _criteria;
-
-		public Query(Func<TData, bool> criteria)
+		public MongoQuery(FilterDefinition<TData> filter,
+			ProjectionDefinition<TData> projection,
+			SortDefinition<TData> sort)
 		{
-			_criteria = criteria;
+			Filter = filter;
+			Projection = projection;
+			Sort = sort;
 		}
 
-		public Expression<Func<TData, bool>> AsExpression() => d => _criteria(d);
+		public FilterDefinition<TData> Filter { get; }
+		public ProjectionDefinition<TData> Projection { get; }
+		public SortDefinition<TData> Sort { get; }
 	}
 }

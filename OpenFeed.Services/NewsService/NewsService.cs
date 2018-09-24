@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
-using NewsAPI.Constants;
 using OpenFeed.Services.NewsRepository;
+using OpenFeed.Services.NewsRepository.Sort;
 using OpenFeed.Services.NewsService.QueryBuilder;
 using OpenFeed.Services.Pagination;
-using SortDirection = OpenFeed.Services.NewsRepository.SortDirection;
 
 namespace OpenFeed.Services.NewsService
 {
@@ -15,15 +13,15 @@ namespace OpenFeed.Services.NewsService
         private readonly IQueryableArticleRepository _articleRepository;
         private readonly IPaginationService _paginationService;
         private readonly ISortFactory<ArticleData> _sortFactory;
-        private readonly INewsQueryBuilder _newsQueryBuilder;
+        private readonly INewsFilterBuilder _newsFilterBuilder;
 		private const int PageSize = 20;
 
-        public NewsService(IQueryableArticleRepository articleRepository, IPaginationService paginationService, ISortFactory<ArticleData> sortFactory, INewsQueryBuilder newsQueryBuilder)
+        public NewsService(IQueryableArticleRepository articleRepository, IPaginationService paginationService, ISortFactory<ArticleData> sortFactory, INewsFilterBuilder newsFilterBuilder)
         {
 	        _articleRepository = articleRepository;
 	        _paginationService = paginationService;
 	        _sortFactory = sortFactory;
-	        _newsQueryBuilder = newsQueryBuilder;
+	        _newsFilterBuilder = newsFilterBuilder;
         }
 
         public IPaginatedResults<Article> SearchArticles(NewsSearchConfiguration config)
@@ -33,22 +31,27 @@ namespace OpenFeed.Services.NewsService
 
 	    private IEnumerable<Article> ArticlesFromApi(NewsSearchConfiguration config)
 	    {
-			return _articleRepository.GetMany(_newsQueryBuilder.BuildQuery(config), _sortFactory.Make(config.SortType))
+			return _articleRepository.GetMany(Query(config))
 		        .Select(ToArticle)
 		        .ToList();
         }
 
-	    FilterDefinition<ArticleData> Filter(NewsSearchConfiguration config)
+	    IMongoQuery<ArticleData> Query(NewsSearchConfiguration config)
 	    {
-		    return config.Category.HasValue 
-			    ? Builders<ArticleData>.Filter.Eq(data => data.Category, CategoryName(config.Category.Value))
-			    : FilterDefinition<ArticleData>.Empty;
+			return new MongoQuery<ArticleData>(
+				_newsFilterBuilder.BuildQuery(config),
+				ProjectionDefinition(config),
+				_sortFactory.Make(config.SortType).AsMongoSortDefintion());
 	    }
 
-		private string CategoryName(Categories? category) 
-			=> category.HasValue ? Enum.GetName(typeof(Categories), category.Value) : null;
-		
-        private static Article ToArticle(ArticleData article)
+	    ProjectionDefinition<ArticleData> ProjectionDefinition(NewsSearchConfiguration config)
+	    {
+		    return true//config.SortType == SortType.RelevancyDescending 
+			    ? Builders<ArticleData>.Projection.MetaTextScore("TextMatchScore") 
+			    : null;
+	    }
+
+		private static Article ToArticle(ArticleData article)
         {
             return new Article
             {

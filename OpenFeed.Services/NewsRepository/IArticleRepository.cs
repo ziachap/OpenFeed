@@ -20,8 +20,8 @@ namespace OpenFeed.Services.NewsRepository
     // TODO: This can eventually be merged into IArticleRepository
 	public interface IQueryableArticleRepository : IArticleRepository
 	{
-		ArticleData GetSingle(FilterDefinition<ArticleData> filter, ISort<ArticleData> sort);
+		ArticleData GetSingle(IMongoQuery<ArticleData> query);
 
-		IEnumerable<ArticleData> GetMany(FilterDefinition<ArticleData> filter, ISort<ArticleData> sort);
+		IEnumerable<ArticleData> GetMany(IMongoQuery<ArticleData> query);
 	}
 }

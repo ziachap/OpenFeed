@@ -9,6 +9,7 @@ using OpenFeed.Services.DateTimeProvider;
 using OpenFeed.Services.NewsAPI;
 using OpenFeed.Services.NewsManager;
 using OpenFeed.Services.NewsRepository;
+using OpenFeed.Services.NewsRepository.Sort;
 using OpenFeed.Services.NewsService;
 using OpenFeed.Services.NewsService.QueryBuilder;
 using OpenFeed.Services.Pagination;
@@ -48,7 +49,7 @@ namespace OpenFeed
             services.AddTransient<INewsImporter, NewsImporter>();
             services.AddTransient<INewsAggregator, NewsApiNewsAggregator>();
 
-            services.AddTransient<INewsQueryBuilder, NewsQueryBuilder>();
+            services.AddTransient<INewsFilterBuilder, NewsFilterBuilder>();
             services.AddTransient<INewsFilter, CategoryNewsFilter>();
             services.AddTransient<INewsFilter, TextNewsFilter>();
 

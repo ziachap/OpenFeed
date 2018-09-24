@@ -17,16 +17,26 @@ export class Sort extends React.Component<NewsReelProps, {}> {
 	}
 
 	render() {
-		return <div><div className="header item">Sort By</div>
-			{sortTypes.map(sortType => this.renderSortInput(sortType.name, sortType.id))}
+		return <div>
+			       <div className="header item">Sort By</div>
+			       {this.defined(this.props.searchConfiguration.text) ? this.renderRelevanceSortInput() : ""}
+			       {sortTypes.map(sortType => this.renderSortInput(sortType.name, sortType.id))}
 		       </div>;
+	}
+
+	private renderRelevanceSortInput() {
+		return this.renderSortInput("Most Relevant", 2);
 	}
 
 	private renderSortInput(text: string, id: number) {
 		return <a key={id} className={`item ${this.props.searchConfiguration.sortTypeId === id ? "active" : ""}`}
-			onClick={(e: any) => this.setSortTypeHandler(e, id)}>
+		          onClick={(e: any) => this.setSortTypeHandler(e, id)}>
 			       {text}
 		       </a>;
+	}
+
+	private defined(value: any): boolean {
+		return value !== undefined && value !== null && value !== "";
 	}
 }
 

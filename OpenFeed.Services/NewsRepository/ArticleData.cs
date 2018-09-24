@@ -2,13 +2,15 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using NPoco;
+using OpenFeed.Services.NewsRepository.Sort;
 
 namespace OpenFeed.Services.NewsRepository
 {
 	[TableName("Article")]
 	[PrimaryKey("Id")]
-	public class ArticleData
+	public class ArticleData : ITextSearchSortable
 	{
+		// SQL
 		//[BsonElement]
 		//public Guid Id { get; set; }
 		
@@ -38,6 +40,9 @@ namespace OpenFeed.Services.NewsRepository
 
 		[BsonElement]
 		public string Category { get; set; }
+
+		[BsonIgnoreIfNull]
+		public double? TextMatchScore { get; set; }
 
 		public int? Hash()
 		{

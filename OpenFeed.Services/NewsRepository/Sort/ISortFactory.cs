@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace OpenFeed.Services.NewsRepository
+namespace OpenFeed.Services.NewsRepository.Sort
 {
     public interface ISortFactory<T>
     {
@@ -19,6 +17,8 @@ namespace OpenFeed.Services.NewsRepository
 					return new Sort<ArticleData>(a => a.PublishDate, SortDirection.Ascending);
 				case SortType.PublishDateDescending:
 					return new Sort<ArticleData>(a => a.PublishDate, SortDirection.Descending);
+				case SortType.RelevancyDescending:
+					return new RelevancySort<ArticleData>();
 				default:
 					throw new Exception("SortType not supported: " + sortType);
 			}

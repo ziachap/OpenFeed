@@ -13,11 +13,19 @@ export class SearchInput extends React.Component<NewsReelProps, {}> {
 	setTextHandler(event: any): void {
 		const value = event.target.value;
 		this.props.setText(value);
+
+		if (!this.defined(this.props.searchConfiguration.text)) {
+			this.props.setSortType(0);
+		} else {
+			this.props.setSortType(2);
+		}
+
 		this.props.requestArticles();
 	}
 
 	clearTextHandler(event: any): void {
 		this.props.setText("");
+		this.props.setSortType(0);
 		this.props.requestArticles();
 	}
 

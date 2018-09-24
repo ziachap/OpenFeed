@@ -5,11 +5,11 @@ using OpenFeed.Services.NewsRepository;
 
 namespace OpenFeed.Services.NewsService.QueryBuilder
 {
-	public class NewsQueryBuilder : INewsQueryBuilder
+	public class NewsFilterBuilder : INewsFilterBuilder
 	{
 		private readonly IEnumerable<INewsFilter> _filters;
 
-		public NewsQueryBuilder(IEnumerable<INewsFilter> filters)
+		public NewsFilterBuilder(IEnumerable<INewsFilter> filters)
 		{
 			_filters = filters;
 		}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using OpenFeed.Services.Database;
 
@@ -43,16 +44,19 @@ namespace OpenFeed.Services.NewsRepository
 			Execute(collection => collection.DeleteOne(IdFilter(article.Id)));
 		}
 
-		public ArticleData GetSingle(FilterDefinition<ArticleData> filter, ISort<ArticleData> sort)
+		public ArticleData GetSingle(IMongoQuery<ArticleData> query)
 		{
-			return GetMany(filter, sort).Single();
+			return GetMany(query).Single();
 		}
 
-		public IEnumerable<ArticleData> GetMany(FilterDefinition<ArticleData> filter, ISort<ArticleData> sort)
+		public IEnumerable<ArticleData> GetMany(IMongoQuery<ArticleData> query)
 		{
 			return Execute(collection =>
 			{
-				return collection.Find(filter).Sort(sort.AsMongoSortDefintion()).ToList();
+				return collection.Find(query.Filter)
+					.Project<ArticleData>(query.Projection)
+					.Sort(query.Sort)
+					.ToList();
 			});
 		}
 

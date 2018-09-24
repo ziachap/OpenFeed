@@ -2,13 +2,8 @@
 using System.Linq.Expressions;
 using MongoDB.Driver;
 
-namespace OpenFeed.Services.NewsRepository
+namespace OpenFeed.Services.NewsRepository.Sort
 {
-	public interface ISort<T>
-	{
-		SortDefinition<T> AsMongoSortDefintion();
-	}
-
 	public class Sort<T> : ISort<T>
 	{
 		private readonly Expression<Func<T, object>> _fieldSelector;
