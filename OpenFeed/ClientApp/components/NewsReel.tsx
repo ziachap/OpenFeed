@@ -7,6 +7,7 @@ import ArticleCard from "./ArticleCard";
 import Pagination from "./Pagination";
 import Categories from "./Categories";
 import Sort from "./Sort";
+import SearchInput from "./SearchInput";
 import { newsCategoryService } from "../models/NewsCategories";
 import "jquery";
 
@@ -26,17 +27,19 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 
 	render() {
 		return <div className="ui container text">
-
+			       <div className="ui small header">
+					United Kingdom > {newsCategoryService.getName(this.props.searchConfiguration.categoryId)}
+			       </div>
+			       <p></p>
+			       <Pagination {...this.props}/>
 			       <div className="ui very padded segment">
 				       <div className="ui right rail">
 					       {this.renderMenu()}
 				       </div>
-				       <h1>United Kingdom > {newsCategoryService.getName(this.props.searchConfiguration.categoryId)}</h1>
-				       <p></p>
-				       <Pagination {...this.props}/>
+
 				       {this.props.isLoading ? <span>Loading...</span> : this.renderArticles()}
-				       <Pagination {...this.props}/>
 			       </div>
+			       <Pagination {...this.props}/>
 		       </div>;
 	}
 
@@ -50,25 +53,31 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 	private renderMenu() {
 		return <div className="ui">
 			       <div className="ui vertical text small menu">
-				
+						<SearchInput {...this.props} />
 						<Sort {...this.props} />
-
 				       <Categories {...this.props}/>
-
-				       <div className="header item">Other</div>
-				       <div className="ui small form">
-					       <div className="inline field">
-						       <div className="ui checkbox">
-							       <input type="checkbox" className="hidden"/>
-							       <label>Business</label>
-						       </div>
-					       </div>
-				       </div>
 			       </div>
+		       </div>;
+	}
+
+	private renderFrame() {
+		return <div className="ui vertical text medium menu">
+			       <iframe name="iframe_article"></iframe>
 		       </div>;
 	}
 }
 
+/*
+<div className="header item">Other</div>
+<div className="ui small form">
+   <div className="inline field">
+       <div className="ui checkbox">
+	       <input type="checkbox" className="hidden"/>
+	       <label>Business</label>
+       </div>
+   </div>
+</div>
+ */
 
 export default connect(
 	(state: ApplicationState) => state.newsReel, // Selects which state properties are merged into the component's props

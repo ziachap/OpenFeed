@@ -1,12 +1,14 @@
 import * as React from "react";
 import { NavMenu } from "./NavMenu";
+import { Header } from "./Header";
 import { Footer } from "./Footer";
 
 export class Layout extends React.Component<{}, {}> {
 
     render() {
         return <div className="">
-                   <NavMenu/>
+
+				<Header />
                    <div className="ui main container">
                        { this.props.children }
                    </div>
@@ -15,3 +17,4 @@ export class Layout extends React.Component<{}, {}> {
     }
 
 }
+//<NavMenu/>

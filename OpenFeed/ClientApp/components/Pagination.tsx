@@ -22,7 +22,7 @@ export class Pagination extends React.Component<NewsReelProps, {}> {
 
 	private renderPagination() {
 		const totalPages = this.props.paginatedArticles.totalPages;
-		return <div className="ui pagination menu">
+		return <div className="ui small pagination menu">
 			       {this.renderPaginationInput("<",
 				       this.props.paginatedArticles.page - 1,
 				       false,
@@ -43,7 +43,7 @@ export class Pagination extends React.Component<NewsReelProps, {}> {
 
 	private renderAbbreviatedPagination() {
 		const totalPages = this.props.paginatedArticles.totalPages;
-		return <div className="ui borderless pagination menu">
+		return <div className="ui small pagination menu">
 			       {this.renderPaginationInput("<",
 				       this.props.paginatedArticles.page - 1,
 				       false,

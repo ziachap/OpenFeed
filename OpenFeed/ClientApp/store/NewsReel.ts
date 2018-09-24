@@ -27,7 +27,8 @@ export interface Article {
 export interface NewsSearchConfiguration {
     categoryId?: number;
 	sortTypeId?: number;
-    page?: number;
+	page?: number;
+	text?: string;
 }
 
 export interface IPaginatedArticles {
@@ -67,9 +68,19 @@ interface SetPageAction {
 	page: number;
 }
 
+interface SetTextAction {
+	type: 'SET_TEXT';
+	text: string;
+}
+
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestArticlesAction | ReceiveArticlesAction | SetCategoryAction | SetPageAction | SetSortTypeAction;
+type KnownAction = RequestArticlesAction
+	| ReceiveArticlesAction
+	| SetCategoryAction
+	| SetPageAction
+	| SetSortTypeAction
+	| SetTextAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -97,6 +108,7 @@ export const actionCreators = {
 			if (defined(controls.categoryId)) str += "&categoryId=" + controls.categoryId;
 			if (defined(controls.sortTypeId)) str += "&sortTypeId=" + controls.sortTypeId;
 			if (defined(controls.page)) str += "&page=" + controls.page;
+			if (defined(controls.text)) str += "&text=" + controls.text;
 			return str;
 
 			function defined(value:any):boolean {
@@ -112,6 +124,9 @@ export const actionCreators = {
 	},
 	setPage: (page: number): AppThunkAction<SetPageAction> => (dispatch, getState) => {
 		dispatch({ type: 'SET_PAGE', page: page });
+	},
+	setText: (text: string): AppThunkAction<SetTextAction> => (dispatch, getState) => {
+		dispatch({ type: 'SET_TEXT', text: text });
 	}
 };
 
@@ -130,7 +145,8 @@ const unloadedArticles: IPaginatedArticles = {
 const unloadedSearchConfiguration: NewsSearchConfiguration = {
 	categoryId: undefined,
 	sortTypeId: 0,
-	page: 0
+	page: 0,
+	text: undefined
 };
 
 const unloadedState: NewsReelState = {
@@ -173,6 +189,15 @@ export const reducer: Reducer<NewsReelState> = (state: NewsReelState, incomingAc
         case 'SET_PAGE':
 	        var newConfig = state.searchConfiguration;
 			newConfig.page = action.page;
+	        return {
+		        paginatedArticles: state.paginatedArticles,
+		        isLoading: state.isLoading,
+		        searchConfiguration: newConfig
+			};
+        case 'SET_TEXT':
+	        var newConfig = state.searchConfiguration;
+			newConfig.text = action.text;
+	        newConfig.page = 0;
 	        return {
 		        paginatedArticles: state.paginatedArticles,
 		        isLoading: state.isLoading,

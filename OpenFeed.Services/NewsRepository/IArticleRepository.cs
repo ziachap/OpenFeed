@@ -17,6 +17,7 @@ namespace OpenFeed.Services.NewsRepository
 	}
 
 	// TODO: FilterDefinition is mongo-specific, make more filter type not mongo-specific
+    // TODO: This can eventually be merged into IArticleRepository
 	public interface IQueryableArticleRepository : IArticleRepository
 	{
 		ArticleData GetSingle(FilterDefinition<ArticleData> filter, ISort<ArticleData> sort);

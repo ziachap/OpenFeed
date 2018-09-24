@@ -7,8 +7,8 @@ import Counter from './components/Counter';
 import NewsReel from "./components/NewsReel";
 
 export const routes = <Layout>
-    <Route exact path='/' component={Home} />
-    <Route path='/newsreel' component={ NewsReel } />
+    <Route exact path='/home' component={Home} />
+    <Route path='/' component={ NewsReel } />
     <Route path='/counter' component={ Counter } />
     <Route path='/fetchdata/:startDateIndex?' component={ FetchData } />
 </Layout>;

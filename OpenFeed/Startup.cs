@@ -10,6 +10,7 @@ using OpenFeed.Services.NewsAPI;
 using OpenFeed.Services.NewsManager;
 using OpenFeed.Services.NewsRepository;
 using OpenFeed.Services.NewsService;
+using OpenFeed.Services.NewsService.QueryBuilder;
 using OpenFeed.Services.Pagination;
 using OpenFeed.Services.RSS;
 using IDatabaseProvider = OpenFeed.Services.Database.IDatabaseProvider;
@@ -46,6 +47,10 @@ namespace OpenFeed
             services.AddTransient<INewsApiClientProvider, NewsApiClientProvider>();
             services.AddTransient<INewsImporter, NewsImporter>();
             services.AddTransient<INewsAggregator, NewsApiNewsAggregator>();
+
+            services.AddTransient<INewsQueryBuilder, NewsQueryBuilder>();
+            services.AddTransient<INewsFilter, CategoryNewsFilter>();
+            services.AddTransient<INewsFilter, TextNewsFilter>();
 
             services.AddTransient<IRssFeedService, RssFeedService>();
             services.AddTransient<IRssFeedRepository, RssFeedRepository>();

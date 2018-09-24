@@ -58,16 +58,17 @@ namespace OpenFeed.Services.NewsRepository
 
 		private void Execute(Action<IMongoCollection<ArticleData>> operation)
 		{
-			var collection = _databaseProvider.Database().GetCollection<ArticleData>(ArticleCollection);
-			operation(collection);
+			operation(Collection());
 		}
 
 		private T Execute<T>(Func<IMongoCollection<ArticleData>, T> operation)
 		{
-			var collection = _databaseProvider.Database().GetCollection<ArticleData>(ArticleCollection);
-			var result = operation(collection);
+			var result = operation(Collection());
 			return result;
 		}
+
+		private IMongoCollection<ArticleData> Collection() 
+			=> _databaseProvider.Database().GetCollection<ArticleData>(ArticleCollection);
 
 		private FilterDefinition<ArticleData> IdFilter(ObjectId id) 
 			=> Builders<ArticleData>.Filter.Eq(d => d.Id, id);
