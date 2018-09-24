@@ -37,14 +37,21 @@ class NewsReel extends React.Component<NewsReelProps, {}> {
 					       {this.renderMenu()}
 				       </div>
 
-				       {this.props.isLoading ? <span>Loading...</span> : this.renderArticles()}
+				       {this.props.isLoading ? this.renderLoader() : this.renderArticles()}
 			       </div>
 			       <Pagination {...this.props}/>
 		       </div>;
 	}
 
+	private renderLoader() {
+		return <div className="ui active inverted dimmer">
+			       <div className="ui text loader">Loading</div>
+		       </div>;
+	}
+
 	private renderArticles() {
 		return <div className="ui divided items">
+			       {this.props.paginatedArticles.totalPages === 0 ? <h4>No articles found</h4> : ""}
 			       {this.props.paginatedArticles.results.map(
 				       article => <ArticleCard {...article} key={article.title}/>)}
 		       </div>;

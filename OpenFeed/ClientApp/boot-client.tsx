@@ -21,6 +21,7 @@ import '../semantic/dist/components/dropdown.css'
 import '../semantic/dist/components/label.css'
 import '../semantic/dist/components/input.css'
 import '../semantic/dist/components/rail.css'
+import '../semantic/dist/components/loader.css'
 
 import '../semantic/dist/components/checkbox.css'
 //import '../semantic/dist/components/checkbox.js'
