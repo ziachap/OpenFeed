@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenFeed.Services\OpenFeed.Services.csproj">
-      <Project>{373ae854-8208-4229-ac15-b74d37838ad2}</Project>
+      <Project>{1baf7cee-0a4e-48f5-a7f2-0927d59b3176}</Project>
       <Name>OpenFeed.Services</Name>
     </ProjectReference>
   </ItemGroup>
