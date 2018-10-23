@@ -11,14 +11,14 @@ namespace OpenFeed.Services.Tests
 	public class NewsImporterTests
 	{
 		private MockRepository _repository;
-		private Mock<IArticleRepository> _articleRepository;
+		private Mock<IRepository<ArticleData>> _articleRepository;
 		private Mock<INewsAggregator> _newsAggregator;
 
 		[SetUp]
 		public void Setup()
 		{
 			_repository = new MockRepository(MockBehavior.Strict);
-			_articleRepository = _repository.Create<IArticleRepository>();
+			_articleRepository = _repository.Create<IRepository<ArticleData>>();
 			_newsAggregator = _repository.Create<INewsAggregator>();
 		}
 		
